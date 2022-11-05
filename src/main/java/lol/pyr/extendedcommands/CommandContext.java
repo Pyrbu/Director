@@ -31,7 +31,7 @@ public class CommandContext <P extends JavaPlugin> {
         try {
             return manager.parse(type, args);
         } catch (ParsingException exception) {
-            throw new CommandExecutionException(manager.getMessage(exception.getClass(), this));
+            throw new CommandExecutionException(manager.getMessage(exception.getClazz(), this));
         } catch (EmptyStackException exception) {
             throw new CommandExecutionException(manager.getMessage(MessageKey.NOT_ENOUGH_ARGS, this));
         }

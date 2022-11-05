@@ -7,5 +7,5 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Getter
 public class ParsingException extends Throwable {
-    private final Class<? extends ParserType<?>> Class;
+    private final Class<? extends ParserType<?>> clazz;
 }
