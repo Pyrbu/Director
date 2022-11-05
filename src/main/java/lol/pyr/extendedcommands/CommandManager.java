@@ -4,9 +4,9 @@ import lol.pyr.extendedcommands.api.ExtendedExecutor;
 import lol.pyr.extendedcommands.api.ParserType;
 import lol.pyr.extendedcommands.exception.ParsingException;
 import lol.pyr.extendedcommands.parsers.*;
+import lol.pyr.extendedcommands.parsers.primitive.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -19,13 +19,18 @@ import java.util.Map;
 import java.util.Stack;
 import java.util.function.Function;
 
+@SuppressWarnings("unused")
 public class CommandManager <P extends JavaPlugin> {
 
     @Getter private final P plugin;
     private final Map<Class<?>, ParserType<?>> parserMap = new HashMap<>();
-    @Setter private Function<CommandContext<P>, String> usageProcessor = (context) -> ChatColor.RED + "Incorrect usage: " + context.getCurrentUsage();
     private final Map<MessageKey, Function<CommandContext<P>, String>> messageResolvers = new HashMap<>();
     private final Map<Class<? extends ParserType<?>>, Function<CommandContext<P>, String>> parserMessageResolvers = new HashMap<>();
+
+    @Setter private Function<CommandContext<P>, String> defaultResolver = (context) -> {
+        if (context.getCurrentUsage().length() == 0) return "Incorrect usage";
+        else return "Incorrect usage: " + context.getCurrentUsage();
+    };
 
     public CommandManager(P plugin) {
         this.plugin = plugin;
@@ -55,11 +60,11 @@ public class CommandManager <P extends JavaPlugin> {
     }
 
     protected String getMessage(MessageKey key, CommandContext<P> context) {
-        return messageResolvers.get(key).apply(context);
+        return messageResolvers.getOrDefault(key, defaultResolver).apply(context);
     }
 
     protected String getMessage(Class<? extends ParserType<?>> clazz, CommandContext<P> context) {
-        return parserMessageResolvers.get(clazz).apply(context);
+        return parserMessageResolvers.getOrDefault(clazz, defaultResolver).apply(context);
     }
 
     public void registerDefaultParsers() {
@@ -67,9 +72,15 @@ public class CommandManager <P extends JavaPlugin> {
         registerParser(World.class, new WorldParser());
         registerParser(GameMode.class, new GameModeParser());
         registerParser(Material.class, new MaterialParser());
+
+        registerParser(Short.class, new ShortParser());
         registerParser(Integer.class, new IntegerParser());
+        registerParser(Long.class, new LongParser());
+
         registerParser(Float.class, new FloatParser());
         registerParser(Double.class, new DoubleParser());
+
+        registerParser(Boolean.class, new BooleanParser());
     }
 
 }

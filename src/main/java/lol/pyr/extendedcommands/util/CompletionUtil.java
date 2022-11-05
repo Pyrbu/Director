@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@SuppressWarnings("unused")
 public class CompletionUtil {
 
     private static List<String> filter(String input, Stream<String> stream) {

@@ -13,6 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.EmptyStackException;
 import java.util.Stack;
 
+@SuppressWarnings("unused")
 @RequiredArgsConstructor
 @Getter
 public class CommandContext <P extends JavaPlugin> {

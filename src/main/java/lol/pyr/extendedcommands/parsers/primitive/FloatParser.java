@@ -1,15 +1,15 @@
-package lol.pyr.extendedcommands.parsers;
+package lol.pyr.extendedcommands.parsers.primitive;
 
 import lol.pyr.extendedcommands.api.ParserType;
 import lol.pyr.extendedcommands.exception.ParsingException;
 
 import java.util.Stack;
 
-public class DoubleParser implements ParserType<Double> {
+public class FloatParser implements ParserType<Float> {
     @Override
-    public Double parse(Stack<String> args) throws ParsingException {
+    public Float parse(Stack<String> args) throws ParsingException {
         try {
-            return Double.parseDouble(args.pop());
+            return Float.parseFloat(args.pop());
         } catch (IllegalArgumentException exception) {
             throw new ParsingException(getClass());
         }
