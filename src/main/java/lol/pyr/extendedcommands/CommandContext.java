@@ -2,6 +2,8 @@ package lol.pyr.extendedcommands;
 
 import lol.pyr.extendedcommands.exception.CommandExecutionException;
 import lol.pyr.extendedcommands.exception.ParsingException;
+import lol.pyr.extendedcommands.util.CompletionUtil;
+import lol.pyr.extendedcommands.util.StackUtil;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -11,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.EmptyStackException;
+import java.util.List;
 import java.util.Stack;
 
 @SuppressWarnings("unused")
@@ -71,4 +74,21 @@ public class CommandContext <P extends JavaPlugin> {
         return sender.hasPermission(string);
     }
 
+    public boolean matchCompletion(String... args) {
+        Stack<String> clone = StackUtil.clone(getArgs());
+        for (String s : args) if (!s.equalsIgnoreCase(clone.pop())) return false;
+        return true;
+    }
+
+    public List<String> completePlayers() throws CommandExecutionException {
+        return CompletionUtil.players(popString());
+    }
+
+    public List<String> completeLiteral(String... args) throws CommandExecutionException {
+        return CompletionUtil.literal(popString(), args);
+    }
+
+    public <T extends Enum<T>> List<String> completeEnum(T[] e) throws CommandExecutionException {
+        return CompletionUtil.enums(popString(), e);
+    }
 }

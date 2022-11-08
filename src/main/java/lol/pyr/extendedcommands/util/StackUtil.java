@@ -18,4 +18,9 @@ public class StackUtil {
         stack.addAll(list);
         return stack;
     }
+
+    @SuppressWarnings("unchecked")
+    public static <T> Stack<T> clone(Stack<T> stack) {
+        return (Stack<T>) stack.clone();
+    }
 }

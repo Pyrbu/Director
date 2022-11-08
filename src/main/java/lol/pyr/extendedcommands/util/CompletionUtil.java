@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 @SuppressWarnings("unused")
 public class CompletionUtil {
 
-    private static List<String> filter(String input, Stream<String> stream) {
+    public static List<String> filter(String input, Stream<String> stream) {
         final String finalInput = input.toLowerCase();
         return stream.filter(s -> s.toLowerCase().startsWith(finalInput)).collect(Collectors.toList());
     }
