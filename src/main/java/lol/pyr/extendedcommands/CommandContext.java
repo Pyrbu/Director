@@ -75,6 +75,7 @@ public class CommandContext <P extends JavaPlugin> {
     }
 
     public boolean matchCompletion(String... args) {
+        if (args.length != getArgs().size() - 1) return false;
         Stack<String> clone = StackUtil.clone(getArgs());
         for (String s : args) if (!s.equalsIgnoreCase(clone.pop())) return false;
         return true;
