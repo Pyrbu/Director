@@ -23,7 +23,7 @@ tasks.test {
 }
 
 group = "lol.pyr"
-version = "1.0.1"
+version = "1.1.0"
 
 tasks.compileJava {
     options.release.set(16)
