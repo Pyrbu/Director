@@ -12,9 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.EmptyStackException;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 @SuppressWarnings("unused")
 @RequiredArgsConstructor
@@ -56,9 +54,9 @@ public class CommandContext <P extends JavaPlugin> {
     }
 
     public String dumpAllArgs() {
-        StringBuilder builder = new StringBuilder();
-        while (!args.empty()) builder.append(args.pop());
-        return builder.toString();
+        List<String> list = new ArrayList<>(args);
+        Collections.reverse(list);
+        return String.join(" ", list);
     }
 
     public String popString() throws CommandExecutionException {
@@ -75,7 +73,8 @@ public class CommandContext <P extends JavaPlugin> {
     }
 
     public boolean matchCompletion(String... args) {
-        if (args.length != getArgs().size() - 1) return false;
+        if (args.length != getArgs().size()) return false;
+        if (args.length == 0) return true;
         Stack<String> clone = StackUtil.clone(getArgs());
         for (String s : args) if (!s.equalsIgnoreCase(clone.pop())) return false;
         return true;

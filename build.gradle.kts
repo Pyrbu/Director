@@ -13,13 +13,20 @@ repositories {
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT")
+    testImplementation("org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.0")
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 group = "lol.pyr"
 version = "1.0.1"
 
 tasks.compileJava {
-    options.release.set(17)
+    options.release.set(16)
 }
 
 publishing {
