@@ -16,15 +16,16 @@ dependencies {
 }
 
 group = "lol.pyr"
-version = "1.0.0"
+version = "1.0.1"
+
+tasks.compileJava {
+    options.release.set(17)
+}
 
 publishing {
     publications {
         create<MavenPublication>("maven") {
             versionMapping {
-                usage("java-api") {
-                    fromResolutionOf("runtimeClasspath")
-                }
                 usage("java-runtime") {
                     fromResolutionResult()
                 }
