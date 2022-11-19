@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Stack;
 
 public class GameModeParser implements ParserType<GameMode> {
-
     private final static Map<String, GameMode> aliasMap = new HashMap<>();
     static {
         for (GameMode gm : GameMode.values()) aliasMap.put(gm.name().toLowerCase(), gm);
@@ -32,5 +31,4 @@ public class GameModeParser implements ParserType<GameMode> {
         if (!aliasMap.containsKey(arg)) throw new ParsingException(getClass());
         return aliasMap.get(arg);
     }
-
 }

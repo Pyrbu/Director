@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Stack;
 
 public class BooleanParser implements ParserType<Boolean> {
-
     private final static Map<String, Boolean> aliasMap = new HashMap<>();
     static {
         aliasMap.put("true", true);

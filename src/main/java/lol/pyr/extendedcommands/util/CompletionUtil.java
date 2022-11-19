@@ -10,7 +10,6 @@ import java.util.stream.Stream;
 
 @SuppressWarnings("unused")
 public class CompletionUtil {
-
     public static List<String> filter(String input, Stream<String> stream) {
         final String finalInput = input.toLowerCase();
         return stream.filter(s -> s.toLowerCase().startsWith(finalInput)).collect(Collectors.toList());
@@ -19,7 +18,7 @@ public class CompletionUtil {
     public static List<String> players(String input) {
         return filter(input,
                 Bukkit.getOnlinePlayers().stream()
-                .map(HumanEntity::getName));
+                        .map(HumanEntity::getName));
     }
 
     public static List<String> literal(String input, String... strings) {
@@ -29,5 +28,4 @@ public class CompletionUtil {
     public static <T extends Enum<T>> List<String> enums(String input, T[] e) {
         return filter(input, Arrays.stream(e).map(Enum::name));
     }
-
 }

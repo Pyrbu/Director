@@ -76,7 +76,7 @@ public class CommandContext <P extends JavaPlugin> {
         if (args.length != getArgs().size()) return false;
         if (args.length == 0) return true;
         Stack<String> clone = StackUtil.clone(getArgs());
-        for (String s : args) if (!s.equalsIgnoreCase(clone.pop())) return false;
+        for (String s : args) if (!s.equals("*") && !s.equalsIgnoreCase(clone.pop())) return false;
         return true;
     }
 

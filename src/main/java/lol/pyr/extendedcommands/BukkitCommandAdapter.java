@@ -13,7 +13,6 @@ import java.util.List;
 
 @AllArgsConstructor
 public class BukkitCommandAdapter <P extends JavaPlugin> implements TabExecutor {
-
     private CommandManager<P> manager;
     private ExtendedExecutor<P> executor;
 
@@ -35,5 +34,4 @@ public class BukkitCommandAdapter <P extends JavaPlugin> implements TabExecutor 
         } catch (Throwable ignored) {}
         return List.of();
     }
-
 }

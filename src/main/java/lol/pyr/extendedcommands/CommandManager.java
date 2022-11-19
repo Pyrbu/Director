@@ -21,7 +21,6 @@ import java.util.function.Function;
 
 @SuppressWarnings("unused")
 public class CommandManager <P extends JavaPlugin> {
-
     @Getter private final P plugin;
     private final Map<Class<?>, ParserType<?>> parserMap = new HashMap<>();
     private final Map<MessageKey, Function<CommandContext<P>, String>> messageResolvers = new HashMap<>();
@@ -82,5 +81,4 @@ public class CommandManager <P extends JavaPlugin> {
 
         registerParser(Boolean.class, new BooleanParser());
     }
-
 }
