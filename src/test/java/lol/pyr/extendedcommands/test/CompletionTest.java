@@ -13,10 +13,11 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CompletionTest {
     @Test
     public void testMatching() {
-        assertTrue(createContext("a", "b", "c").matchCompletion("a", "b", "c"));
-        assertTrue(createContext().matchCompletion());
+        assertTrue(createContext("a", "b", "c", "d").matchCompletion("a", "b", "c"));
+        assertTrue(createContext("amongo", "amongi", "amonger").matchCompletion("*", "amongi"));
+        assertTrue(createContext("Pyrbu", "UNFINISHED_MAT").matchCompletion("*"));
+        assertTrue(createContext("Pyrbu", "").matchCompletion("*"));
 
-        assertFalse(createContext("a", "b", "c").matchCompletion("a", "b"));
         assertFalse(createContext("a", "b").matchCompletion("a", "b", "c"));
         assertFalse(createContext().matchCompletion("a"));
     }
