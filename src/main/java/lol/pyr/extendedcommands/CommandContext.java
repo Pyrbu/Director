@@ -91,4 +91,8 @@ public class CommandContext <P extends JavaPlugin> {
     public <T extends Enum<T>> List<String> completeEnum(T[] e) throws CommandExecutionException {
         return CompletionUtil.enums(popString(), e);
     }
+
+    public List<String> completeCollection(Collection<String> args) throws CommandExecutionException {
+        return CompletionUtil.filter(popString(), args.stream());
+    }
 }
