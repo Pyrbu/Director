@@ -13,7 +13,7 @@ import java.util.Stack;
  */
 public interface ParserType<T> {
     /**
-     * The function that parses a stack of strings into <T>
+     * The function that parses a stack of strings into T
      *
      * @param args The arguments that are provided for parsing
      * @return The parsed value

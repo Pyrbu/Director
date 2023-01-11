@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
+/**
+ * A class containing utility methods for working with the {@link Stack} data structure
+ */
 public class StackUtil {
     public static <T> Stack<T> fromArray(T[] array) {
         return fromArray(array, true);

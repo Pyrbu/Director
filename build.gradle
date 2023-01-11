@@ -23,35 +23,46 @@ tasks.test {
 }
 
 group = "lol.pyr"
-version = "1.3.0"
+version = "1.3.2"
 
 tasks.compileJava {
     options.release.set(16)
 }
 
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier 'javadoc'
+    from javadoc.destinationDir
+}
+
+task sourcesJar(type: Jar) {
+    classifier 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
 publishing {
     publications {
-        create<MavenPublication>("maven") {
-            versionMapping {
-                usage("java-runtime") {
-                    fromResolutionResult()
-                }
-            }
+        mavenJava(MavenPublication) {
+            from components.java
+            artifact javadocJar
+            artifact sourcesJar
 
             pom {
                 name.set("extendedcommands")
                 description.set("Extension of the Bukkit command framework")
                 url.set("https://github.com/Pyr2115/ExtendedBukkitCommands")
             }
-
-            from(components["java"])
         }
     }
     repositories {
         maven {
             credentials {
-                username = properties["DIST_USERNAME"] as String?
-                password = properties["DIST_PASSWORD"] as String?
+                username DIST_USERNAME
+                password DIST_PASSWORD
             }
             url = uri("https://repo.pyr.lol/releases/")
         }

@@ -54,15 +54,36 @@ public class CommandManager {
         return parserMessageResolvers.getOrDefault(clazz, defaultResolver).apply(context);
     }
 
+    /**
+     * A function to set the default message resolver for when an error message
+     * does not have one explicitly set using {@link #setMessageResolver(Class, Function)} or {@link #setMessageResolver(MessageKey, Function)}
+     * It is smart to use {@link CommandContext#getCurrentUsage()} in the resolving function
+     *
+     * @param function The function that resolves the default error message
+     */
     public void setDefaultResolver(Function<CommandContext, String> function) {
         defaultResolver = function;
     }
 
+    /**
+     * Function used to register a custom {@link ParserType}
+     *
+     * @param clazz The class of the type that the parser parses
+     * @param parser An instance of the parser
+     * @param <T> The type that the parser is for
+     */
     public <T> void registerParser(Class<T> clazz, ParserType<T> parser) {
         parserMap.put(clazz, parser);
     }
 
-
+    /**
+     * Method used to provide a function that dynamically computes an error message for a specific
+     * {@link MessageKey}, these functions are used by methods in {@link CommandContext} to resolve
+     * error messages
+     *
+     * @param key The message key that the resolver function is for
+     * @param func The function that resolves an error message based on a {@link CommandContext}
+     */
     public void setMessageResolver(MessageKey key, Function<CommandContext, String> func) {
         messageResolvers.put(key, func);
     }
