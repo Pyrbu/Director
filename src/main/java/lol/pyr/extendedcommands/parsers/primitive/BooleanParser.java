@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
+/**
+ * An implementation of {@link ParserType} for parsing the {@link Boolean} class
+ */
 public class BooleanParser implements ParserType<Boolean> {
     private final static Map<String, Boolean> aliasMap = new HashMap<>();
     static {
@@ -25,6 +28,13 @@ public class BooleanParser implements ParserType<Boolean> {
         aliasMap.put("disabled", false);
     }
 
+    /**
+     * Parses a stack of strings into a {@link Boolean}
+     *
+     * @param args The arguments that are provided for parsing
+     * @return A parsed {@link Boolean}
+     * @throws ParsingException When parsing could not be completed
+     */
     @Override
     public Boolean parse(Stack<String> args) throws ParsingException {
         String arg = args.pop().toLowerCase();

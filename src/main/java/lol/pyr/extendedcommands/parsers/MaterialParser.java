@@ -6,7 +6,17 @@ import org.bukkit.Material;
 
 import java.util.Stack;
 
+/**
+ * An implementation of {@link ParserType} for parsing the {@link Material} class
+ */
 public class MaterialParser implements ParserType<Material> {
+    /**
+     * Parses a stack of strings into a {@link Material} using the {@link Material#getMaterial(String)} method
+     *
+     * @param args The arguments that are provided for parsing
+     * @return A parsed {@link Material}
+     * @throws ParsingException When parsing could not be completed
+     */
     @Override
     public Material parse(Stack<String> args) throws ParsingException {
         Material mat = Material.getMaterial(args.pop());

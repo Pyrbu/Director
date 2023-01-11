@@ -3,10 +3,12 @@ package lol.pyr.extendedcommands;
 import lol.pyr.extendedcommands.api.ExtendedExecutor;
 import lol.pyr.extendedcommands.api.ParserType;
 import lol.pyr.extendedcommands.exception.ParsingException;
-import lol.pyr.extendedcommands.parsers.*;
+import lol.pyr.extendedcommands.parsers.GameModeParser;
+import lol.pyr.extendedcommands.parsers.MaterialParser;
+import lol.pyr.extendedcommands.parsers.PlayerParser;
+import lol.pyr.extendedcommands.parsers.WorldParser;
 import lol.pyr.extendedcommands.parsers.primitive.*;
 import lombok.Getter;
-import lombok.Setter;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -19,38 +21,24 @@ import java.util.Map;
 import java.util.Stack;
 import java.util.function.Function;
 
+/**
+ * The class that handles the registration of commands, contains
+ * all of the registered parser types and resolves all error messages
+ */
 @SuppressWarnings("unused")
-public class CommandManager <P extends JavaPlugin> {
-    @Getter private final P plugin;
+public class CommandManager {
+    @Getter private final JavaPlugin plugin;
     private final Map<Class<?>, ParserType<?>> parserMap = new HashMap<>();
-    private final Map<MessageKey, Function<CommandContext<P>, String>> messageResolvers = new HashMap<>();
-    private final Map<Class<? extends ParserType<?>>, Function<CommandContext<P>, String>> parserMessageResolvers = new HashMap<>();
+    private final Map<MessageKey, Function<CommandContext, String>> messageResolvers = new HashMap<>();
+    private final Map<Class<? extends ParserType<?>>, Function<CommandContext, String>> parserMessageResolvers = new HashMap<>();
 
-    @Setter private Function<CommandContext<P>, String> defaultResolver = (context) -> {
+    private Function<CommandContext, String> defaultResolver = (context) -> {
         if (context.getCurrentUsage().length() == 0) return "Incorrect usage";
         else return "Incorrect usage: " + context.getCurrentUsage();
     };
 
-    public CommandManager(P plugin) {
+    public CommandManager(JavaPlugin plugin) {
         this.plugin = plugin;
-    }
-
-    public <T> void registerParser(Class<T> clazz, ParserType<T> parser) {
-        parserMap.put(clazz, parser);
-    }
-
-    public void setMessageResolver(MessageKey key, Function<CommandContext<P>, String> func) {
-        messageResolvers.put(key, func);
-    }
-
-    public void setMessageResolver(Class<? extends ParserType<?>> clazz, Function<CommandContext<P>, String> func) {
-        parserMessageResolvers.put(clazz, func);
-    }
-
-    public void registerCommand(String name, ExtendedExecutor<P> command) {
-        PluginCommand c = plugin.getCommand(name);
-        if (c == null) plugin.getLogger().severe("Attempted to register a command that isnt in the plugin.yml!");
-        else c.setExecutor(new BukkitCommandAdapter<>(this, command));
     }
 
     @SuppressWarnings("unchecked")
@@ -58,14 +46,54 @@ public class CommandManager <P extends JavaPlugin> {
         return (T) parserMap.get(type).parse(args);
     }
 
-    protected String getMessage(MessageKey key, CommandContext<P> context) {
+    protected String getMessage(MessageKey key, CommandContext context) {
         return messageResolvers.getOrDefault(key, defaultResolver).apply(context);
     }
 
-    protected String getMessage(Class<? extends ParserType<?>> clazz, CommandContext<P> context) {
+    protected String getMessage(Class<? extends ParserType<?>> clazz, CommandContext context) {
         return parserMessageResolvers.getOrDefault(clazz, defaultResolver).apply(context);
     }
 
+    public void setDefaultResolver(Function<CommandContext, String> function) {
+        defaultResolver = function;
+    }
+
+    public <T> void registerParser(Class<T> clazz, ParserType<T> parser) {
+        parserMap.put(clazz, parser);
+    }
+
+
+    public void setMessageResolver(MessageKey key, Function<CommandContext, String> func) {
+        messageResolvers.put(key, func);
+    }
+
+    /**
+     * Registers a custom error message resolver for when a specific parsing type throws a {@link ParsingException},
+     * if one is not registered the default one will be used from {@link #setDefaultResolver(Function)}
+     *
+     * @param clazz The class of the {@link ParserType} that the resolver is being set for
+     * @param func The function that resolves the message from the provided {@link CommandContext}
+     */
+    public void setMessageResolver(Class<? extends ParserType<?>> clazz, Function<CommandContext, String> func) {
+        parserMessageResolvers.put(clazz, func);
+    }
+
+    /**
+     * Registers a command through command manager instance to the underlying command system
+     * 
+     * @param name The name of the command (in plugin.yml)
+     * @param command The executor of the command
+     */
+    public void registerCommand(String name, ExtendedExecutor command) {
+        PluginCommand c = plugin.getCommand(name);
+        if (c == null) plugin.getLogger().severe("Attempted to register a command that isnt in the plugin.yml!");
+        else c.setExecutor(new BukkitCommandAdapter(this, command));
+    }
+
+    /**
+     * Registers all of the parsers that come packaged with the library in {@link lol.pyr.extendedcommands.parsers}
+     * to the command manager that it is executed on
+     */
     public void registerDefaultParsers() {
         registerParser(Player.class, new PlayerParser());
         registerParser(World.class, new WorldParser());

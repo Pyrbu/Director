@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
+/**
+ * An implementation of {@link ParserType} for parsing the {@link GameMode} class
+ */
 public class GameModeParser implements ParserType<GameMode> {
     private final static Map<String, GameMode> aliasMap = new HashMap<>();
     static {
@@ -25,6 +28,14 @@ public class GameModeParser implements ParserType<GameMode> {
         aliasMap.put("sp", GameMode.SPECTATOR);
     }
 
+    /**
+     * Parses a stack of strings into a {@link GameMode}, also parses common
+     * aliases like "0", "s", "1", etc
+     *
+     * @param args The arguments that are provided for parsing
+     * @return A parsed {@link GameMode}
+     * @throws ParsingException When parsing could not be completed
+     */
     @Override
     public GameMode parse(Stack<String> args) throws ParsingException {
         String arg = args.pop().toLowerCase();

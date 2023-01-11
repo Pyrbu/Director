@@ -7,22 +7,21 @@ import lombok.AllArgsConstructor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
 
 @AllArgsConstructor
-public class BukkitCommandAdapter <P extends JavaPlugin> implements TabExecutor {
-    private CommandManager<P> manager;
-    private ExtendedExecutor<P> executor;
+class BukkitCommandAdapter implements TabExecutor {
+    private CommandManager manager;
+    private ExtendedExecutor executor;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         try {
-            CommandContext<P> context = new CommandContext<>(manager, sender, command, label, StackUtil.fromArray(args));
+            CommandContext context = new CommandContext(manager, sender, command, label, StackUtil.fromArray(args));
             executor.run(context);
         } catch (CommandExecutionException exception) {
-            sender.sendMessage(exception.getMessage());
+            if (exception.getMessage() != null) sender.sendMessage(exception.getMessage());
         }
         return true;
     }
@@ -30,7 +29,7 @@ public class BukkitCommandAdapter <P extends JavaPlugin> implements TabExecutor 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         try {
-            return executor.complete(new CommandContext<>(manager, sender, command, label, StackUtil.fromArray(args, false)));
+            return executor.complete(new CommandContext(manager, sender, command, label, StackUtil.fromArray(args, false)));
         } catch (Throwable ignored) {}
         return List.of();
     }

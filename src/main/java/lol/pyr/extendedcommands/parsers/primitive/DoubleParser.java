@@ -5,7 +5,17 @@ import lol.pyr.extendedcommands.exception.ParsingException;
 
 import java.util.Stack;
 
+/**
+ * An implementation of {@link ParserType} for parsing the {@link Double} class
+ */
 public class DoubleParser implements ParserType<Double> {
+    /**
+     * Parses a stack of strings into a {@link Double}
+     *
+     * @param args The arguments that are provided for parsing
+     * @return A parsed {@link Double}
+     * @throws ParsingException When parsing could not be completed
+     */
     @Override
     public Double parse(Stack<String> args) throws ParsingException {
         try {
