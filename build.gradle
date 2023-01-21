@@ -1,13 +1,13 @@
 plugins {
-    id("java-library")
-    id("maven-publish")
-    id("io.freefair.lombok") version "6.5.1"
+    id "java-library"
+    id "maven-publish"
+    id "io.freefair.lombok" version "6.5.1"
 }
 
 repositories {
     mavenCentral()
     maven {
-        url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
+        url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
     }
 }
 
@@ -30,12 +30,12 @@ tasks.compileJava {
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier 'javadoc'
+    classifier "javadoc"
     from javadoc.destinationDir
 }
 
 task sourcesJar(type: Jar) {
-    classifier 'sources'
+    classifier "sources"
     from sourceSets.main.allSource
 }
 
