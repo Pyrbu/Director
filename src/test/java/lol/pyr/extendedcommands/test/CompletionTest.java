@@ -27,5 +27,6 @@ public class CompletionTest {
         assertEquals(List.of("testa", "testb"), createContext("test").completeLiteral("a", "b", "testa", "testb"));
         assertEquals(List.of("BEDROCK"), createContext("bedro").completeEnum(Material.values()));
         assertEquals(List.of("CREATIVE"), createContext("creati").completeEnum(GameMode.values()));
+        assertEquals(List.of("maaa", "mbbb", "mccc"), createContext("amongus", "m").completeLiteral("maaa", "mbbb", "mccc"));
     }
 }

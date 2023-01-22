@@ -29,7 +29,7 @@ public class MultiCommand implements ExtendedExecutor {
     public List<String> complete(CommandContext context) throws CommandExecutionException {
         if (context.matchCompletion()) return context.completeCollection(subcommands.keySet());
         String arg = context.popString().toLowerCase();
-        if (!subcommands.containsKey(arg)) return List.of();
+        if (!subcommands.containsKey(arg.toLowerCase())) return List.of();
         return subcommands.get(arg).complete(context);
     }
 

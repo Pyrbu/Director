@@ -197,7 +197,8 @@ public class CommandContext {
     }
 
     private List<String> completeStream(Stream<String> args) throws CommandExecutionException {
-        final String input = popString().toLowerCase();
+        ensureArgsNotEmpty();
+        final String input = this.args.firstElement().toLowerCase();
         return args.filter(s -> s.toLowerCase().startsWith(input)).collect(Collectors.toList());
     }
 
@@ -220,5 +221,14 @@ public class CommandContext {
      */
     public void halt() throws CommandExecutionException {
         halt(null);
+    }
+
+    /**
+     * A utility method that simply sends a message
+     * to the sender of the command
+     * @param message The message to send
+     */
+    public void send(String message) {
+        sender.sendMessage(message);
     }
 }

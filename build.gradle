@@ -23,7 +23,7 @@ tasks.test {
 }
 
 group = "lol.pyr"
-version = "1.4.0"
+version = "1.4.2"
 
 tasks.compileJava {
     options.release.set(16)
@@ -32,6 +32,7 @@ tasks.compileJava {
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier "javadoc"
     from javadoc.destinationDir
+    exclude "src/main/java/lol/pyr/extendedcommands/util/**"
 }
 
 task sourcesJar(type: Jar) {
