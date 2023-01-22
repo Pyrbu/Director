@@ -15,7 +15,7 @@ repositories {
 }
 
 dependencies {
-    implementation "lol.pyr:extendedcommands:1.3.2"
+    implementation "lol.pyr:extendedcommands:VERSION"
 }
 ```
 
