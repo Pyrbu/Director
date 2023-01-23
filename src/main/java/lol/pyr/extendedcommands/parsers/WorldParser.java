@@ -5,7 +5,7 @@ import lol.pyr.extendedcommands.exception.ParsingException;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 
-import java.util.Stack;
+import java.util.Deque;
 
 /**
  * An implementation of {@link ParserType} for parsing the {@link World} class
@@ -19,7 +19,7 @@ public class WorldParser implements ParserType<World> {
      * @throws ParsingException When parsing could not be completed
      */
     @Override
-    public World parse(Stack<String> args) throws ParsingException {
+    public World parse(Deque<String> args) throws ParsingException {
         World world = Bukkit.getWorld(args.pop());
         if (world == null) throw new ParsingException(getClass());
         return world;

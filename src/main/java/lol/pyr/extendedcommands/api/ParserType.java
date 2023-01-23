@@ -2,7 +2,7 @@ package lol.pyr.extendedcommands.api;
 
 import lol.pyr.extendedcommands.exception.ParsingException;
 
-import java.util.Stack;
+import java.util.Deque;
 
 /**
  * A class that can be implemented to create a custom parser type
@@ -19,5 +19,5 @@ public interface ParserType<T> {
      * @return The parsed value
      * @throws ParsingException When parsing failed (with its own class as the parameter)
      */
-    T parse(Stack<String> args) throws ParsingException;
+    T parse(Deque<String> args) throws ParsingException;
 }

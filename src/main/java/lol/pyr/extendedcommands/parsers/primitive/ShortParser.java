@@ -3,7 +3,7 @@ package lol.pyr.extendedcommands.parsers.primitive;
 import lol.pyr.extendedcommands.api.ParserType;
 import lol.pyr.extendedcommands.exception.ParsingException;
 
-import java.util.Stack;
+import java.util.Deque;
 
 /**
  * An implementation of {@link ParserType} for parsing the {@link Short} class
@@ -17,7 +17,7 @@ public class ShortParser implements ParserType<Short> {
      * @throws ParsingException When parsing could not be completed
      */
     @Override
-    public Short parse(Stack<String> args) throws ParsingException {
+    public Short parse(Deque<String> args) throws ParsingException {
         try {
             return Short.parseShort(args.pop());
         } catch (IllegalArgumentException exception) {

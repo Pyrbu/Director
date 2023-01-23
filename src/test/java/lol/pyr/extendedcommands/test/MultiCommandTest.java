@@ -24,8 +24,20 @@ public class MultiCommandTest {
                         if (context.matchCompletion("a", "b", "c")) return context.completeLiteral("amongus", "bozo");
                         return List.of();
                     }
+                })
+                .addSubcommand("test2", new ExtendedExecutor() {
+                    @Override
+                    public void run(CommandContext context) {}
+
+                    @Override
+                    public List<String> complete(CommandContext context) throws CommandExecutionException {
+                        if (context.matchCompletion()) return context.completeLiteral("kek");
+                        return List.of();
+                    }
                 });
         Assertions.assertEquals(List.of("hi"), cmd.complete(ContextUtil.createContext("test", "")));
         Assertions.assertEquals(List.of("amongus", "bozo"), cmd.complete(ContextUtil.createContext("test", "a", "b", "c", "")));
+        Assertions.assertEquals(List.of("kek"), cmd.complete(ContextUtil.createContext("test2", "")));
+        Assertions.assertEquals(List.of(), cmd.complete(ContextUtil.createContext("test2", "aaa")));
     }
 }

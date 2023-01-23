@@ -2,7 +2,6 @@ package lol.pyr.extendedcommands;
 
 import lol.pyr.extendedcommands.exception.CommandExecutionException;
 import lol.pyr.extendedcommands.exception.ParsingException;
-import lol.pyr.extendedcommands.util.StackUtil;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -27,10 +26,10 @@ public class CommandContext {
     private final CommandSender sender;
     private final Command command;
     private final String label;
-    private final Stack<String> args;
+    private final Deque<String> args;
     @Setter private String currentUsage = "";
 
-    protected CommandContext(CommandManager manager, CommandSender sender, Command command, String label, Stack<String> args) {
+    protected CommandContext(CommandManager manager, CommandSender sender, Command command, String label, Deque<String> args) {
         this.manager = manager;
         this.sender = sender;
         this.command = command;
@@ -105,9 +104,7 @@ public class CommandContext {
      * @return All of the remaining arguments joined by a space
      */
     public String dumpAllArgs() {
-        List<String> list = new ArrayList<>(args);
-        Collections.reverse(list);
-        return String.join(" ", list);
+        return String.join(" ", args);
     }
 
     /**
@@ -118,7 +115,7 @@ public class CommandContext {
      */
     public String popString() throws CommandExecutionException {
         if (argSize() == 0) throw new CommandExecutionException(manager.getMessage(MessageKey.NOT_ENOUGH_ARGS, this));
-        return args.pop();
+        return args.removeFirst();
     }
 
     /**
@@ -141,7 +138,7 @@ public class CommandContext {
     public boolean matchCompletion(String... args) {
         if (args.length + 1 != getArgs().size()) return false;
         if (args.length == 0) return true;
-        Stack<String> clone = StackUtil.clone(getArgs());
+        Deque<String> clone = new ArrayDeque<>(getArgs());
         for (String s : args) {
             String popped = clone.pop();
             if (!s.equals("*") && !s.equalsIgnoreCase(popped)) return false;
@@ -198,7 +195,7 @@ public class CommandContext {
 
     private List<String> completeStream(Stream<String> args) throws CommandExecutionException {
         ensureArgsNotEmpty();
-        final String input = this.args.firstElement().toLowerCase();
+        final String input = getArgs().removeLast().toLowerCase();
         return args.filter(s -> s.toLowerCase().startsWith(input)).collect(Collectors.toList());
     }
 

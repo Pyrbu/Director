@@ -4,7 +4,7 @@ import lol.pyr.extendedcommands.api.ParserType;
 import lol.pyr.extendedcommands.exception.ParsingException;
 import org.bukkit.Material;
 
-import java.util.Stack;
+import java.util.Deque;
 
 /**
  * An implementation of {@link ParserType} for parsing the {@link Material} class
@@ -18,7 +18,7 @@ public class MaterialParser implements ParserType<Material> {
      * @throws ParsingException When parsing could not be completed
      */
     @Override
-    public Material parse(Stack<String> args) throws ParsingException {
+    public Material parse(Deque<String> args) throws ParsingException {
         Material mat = Material.getMaterial(args.pop());
         if (mat == null) throw new ParsingException(getClass());
         return mat;

@@ -3,9 +3,9 @@ package lol.pyr.extendedcommands.parsers.primitive;
 import lol.pyr.extendedcommands.api.ParserType;
 import lol.pyr.extendedcommands.exception.ParsingException;
 
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Stack;
 
 /**
  * An implementation of {@link ParserType} for parsing the {@link Boolean} class
@@ -36,7 +36,7 @@ public class BooleanParser implements ParserType<Boolean> {
      * @throws ParsingException When parsing could not be completed
      */
     @Override
-    public Boolean parse(Stack<String> args) throws ParsingException {
+    public Boolean parse(Deque<String> args) throws ParsingException {
         String arg = args.pop().toLowerCase();
         if (!aliasMap.containsKey(arg)) throw new ParsingException(getClass());
         return aliasMap.get(arg);

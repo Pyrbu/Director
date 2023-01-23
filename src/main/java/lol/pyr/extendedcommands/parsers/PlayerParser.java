@@ -5,7 +5,7 @@ import lol.pyr.extendedcommands.exception.ParsingException;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import java.util.Stack;
+import java.util.Deque;
 
 /**
  * An implementation of {@link ParserType} for parsing the {@link Player} class
@@ -19,7 +19,7 @@ public class PlayerParser implements ParserType<Player> {
      * @throws ParsingException When parsing could not be completed
      */
     @Override
-    public Player parse(Stack<String> args) throws ParsingException {
+    public Player parse(Deque<String> args) throws ParsingException {
         Player player = Bukkit.getPlayer(args.pop());
         if (player == null) throw new ParsingException(getClass());
         return player;

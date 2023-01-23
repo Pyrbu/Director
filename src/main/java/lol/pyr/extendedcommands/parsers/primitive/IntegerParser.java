@@ -3,7 +3,7 @@ package lol.pyr.extendedcommands.parsers.primitive;
 import lol.pyr.extendedcommands.api.ParserType;
 import lol.pyr.extendedcommands.exception.ParsingException;
 
-import java.util.Stack;
+import java.util.Deque;
 
 /**
  * An implementation of {@link ParserType} for parsing the {@link Integer} class
@@ -17,7 +17,7 @@ public class IntegerParser implements ParserType<Integer> {
      * @throws ParsingException When parsing could not be completed
      */
     @Override
-    public Integer parse(Stack<String> args) throws ParsingException {
+    public Integer parse(Deque<String> args) throws ParsingException {
         try {
             return Integer.parseInt(args.pop());
         } catch (IllegalArgumentException exception) {
