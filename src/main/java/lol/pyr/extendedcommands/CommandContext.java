@@ -59,7 +59,7 @@ public class CommandContext {
             return manager.parse(type, args);
         } catch (ParsingException exception) {
             throw new CommandExecutionException(manager.getMessage(exception.getClazz(), this));
-        } catch (EmptyStackException exception) {
+        } catch (NoSuchElementException exception) {
             throw new CommandExecutionException(manager.getMessage(MessageKey.NOT_ENOUGH_ARGS, this));
         }
     }
