@@ -193,7 +193,7 @@ public class CommandContext {
         return completeStream(args.stream());
     }
 
-    private List<String> completeStream(Stream<String> args) throws CommandExecutionException {
+    public List<String> completeStream(Stream<String> args) throws CommandExecutionException {
         ensureArgsNotEmpty();
         final String input = getArgs().removeLast().toLowerCase();
         return args.filter(s -> s.toLowerCase().startsWith(input)).collect(Collectors.toList());
