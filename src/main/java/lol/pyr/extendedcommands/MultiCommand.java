@@ -1,12 +1,15 @@
 package lol.pyr.extendedcommands;
 
 import lol.pyr.extendedcommands.api.ExtendedExecutor;
+import lol.pyr.extendedcommands.api.HelpPrintable;
 import lol.pyr.extendedcommands.exception.CommandExecutionException;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @SuppressWarnings("unused")
 public class MultiCommand implements ExtendedExecutor {
@@ -15,6 +18,15 @@ public class MultiCommand implements ExtendedExecutor {
 
     public MultiCommand(Function<CommandContext, String> helpMessageResolver) {
         this.helpMessageResolver = helpMessageResolver;
+    }
+
+    public MultiCommand() {
+        this.helpMessageResolver = context -> subcommands.values().stream()
+                .filter(executor -> executor instanceof HelpPrintable)
+                .map(executor -> (HelpPrintable) executor)
+                .sorted(Comparator.comparingInt(HelpPrintable::getLinePriority).reversed())
+                .map(HelpPrintable::getLine)
+                .collect(Collectors.joining("\n"));
     }
 
     @Override

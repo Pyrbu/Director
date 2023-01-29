@@ -8,6 +8,7 @@ import lol.pyr.extendedcommands.parsers.MaterialParser;
 import lol.pyr.extendedcommands.parsers.PlayerParser;
 import lol.pyr.extendedcommands.parsers.WorldParser;
 import lol.pyr.extendedcommands.parsers.primitive.*;
+import lol.pyr.extendedcommands.parsers.util.UUIDParser;
 import lombok.Getter;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -19,6 +20,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.Function;
 
 /**
@@ -129,5 +131,7 @@ public class CommandManager {
         registerParser(Double.class, new DoubleParser());
 
         registerParser(Boolean.class, new BooleanParser());
+
+        registerParser(UUID.class, new UUIDParser());
     }
 }
