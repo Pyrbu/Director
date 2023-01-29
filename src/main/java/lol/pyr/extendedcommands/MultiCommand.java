@@ -24,8 +24,8 @@ public class MultiCommand implements ExtendedExecutor {
         this.helpMessageResolver = context -> subcommands.values().stream()
                 .filter(executor -> executor instanceof HelpPrintable)
                 .map(executor -> (HelpPrintable) executor)
-                .sorted(Comparator.comparingInt(HelpPrintable::getLinePriority).reversed())
-                .map(HelpPrintable::getLine)
+                .sorted(Comparator.comparingInt(printable -> printable.getLinePriority(context)))
+                .map(printable -> printable.getLine(context))
                 .collect(Collectors.joining("\n"));
     }
 
