@@ -1,5 +1,6 @@
-package lol.pyr.extendedcommands;
+package lol.pyr.extendedcommands.multicommands;
 
+import lol.pyr.extendedcommands.CommandContext;
 import lol.pyr.extendedcommands.api.ExtendedExecutor;
 import lol.pyr.extendedcommands.api.HelpPrintable;
 import lol.pyr.extendedcommands.exception.CommandExecutionException;
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 @SuppressWarnings("unused")
 public class MultiCommand implements ExtendedExecutor {
     private final Map<String, ExtendedExecutor> subcommands = new HashMap<>();
-    private final Function<CommandContext, String> helpMessageResolver;
+    protected final Function<CommandContext, String> helpMessageResolver;
 
     public MultiCommand(Function<CommandContext, String> helpMessageResolver) {
         this.helpMessageResolver = helpMessageResolver;

@@ -1,7 +1,7 @@
 package lol.pyr.extendedcommands.test;
 
 import lol.pyr.extendedcommands.CommandContext;
-import lol.pyr.extendedcommands.MultiCommand;
+import lol.pyr.extendedcommands.multicommands.MultiCommand;
 import lol.pyr.extendedcommands.api.ExtendedExecutor;
 import lol.pyr.extendedcommands.exception.CommandExecutionException;
 import lol.pyr.extendedcommands.test.util.ContextUtil;
