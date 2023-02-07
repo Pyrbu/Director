@@ -20,5 +20,7 @@ public interface HelpPrintable {
      * @param context The current command context
      * @return The sorting priority
      */
-    int getLinePriority(CommandContext context);
+    default int getLinePriority(CommandContext context) {
+        return 0;
+    }
 }
