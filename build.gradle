@@ -7,26 +7,26 @@ plugins {
 repositories {
     mavenCentral()
     maven {
-        url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+        url "https://repo.papermc.io/repository/maven-public/"
     }
 }
 
 dependencies {
-    compileOnly("org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT")
-    testImplementation("org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.0")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.0")
+    implementation "io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT"
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.9.0"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.9.0"
 }
 
-tasks.test {
+test {
     useJUnitPlatform()
 }
 
 group = "lol.pyr"
-version = "1.5.6"
+version = "1.6.0"
 
-tasks.compileJava {
-    options.release.set(16)
+compileJava {
+    options.release.set(17)
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {

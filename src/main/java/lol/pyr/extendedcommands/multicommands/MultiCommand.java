@@ -4,30 +4,35 @@ import lol.pyr.extendedcommands.CommandContext;
 import lol.pyr.extendedcommands.api.ExtendedExecutor;
 import lol.pyr.extendedcommands.api.HelpPrintable;
 import lol.pyr.extendedcommands.exception.CommandExecutionException;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @SuppressWarnings("unused")
 public class MultiCommand implements ExtendedExecutor {
     private final Map<String, ExtendedExecutor> subcommands = new HashMap<>();
-    protected final Function<CommandContext, String> helpMessageResolver;
+    protected final Function<CommandContext, Component> helpMessageResolver;
 
-    public MultiCommand(Function<CommandContext, String> helpMessageResolver) {
+    public MultiCommand(Function<CommandContext, Component> helpMessageResolver) {
         this.helpMessageResolver = helpMessageResolver;
     }
 
     public MultiCommand() {
-        this.helpMessageResolver = context -> subcommands.values().stream()
-                .filter(executor -> executor instanceof HelpPrintable)
-                .map(executor -> (HelpPrintable) executor)
-                .sorted(Comparator.comparingInt(printable -> printable.getLinePriority(context)))
-                .map(printable -> printable.getLine(context))
-                .collect(Collectors.joining("\n"));
+        this.helpMessageResolver = context -> {
+            TextComponent.Builder component = Component.text();
+            subcommands.values().stream()
+                    .filter(executor -> executor instanceof HelpPrintable)
+                    .map(executor -> (HelpPrintable) executor)
+                    .sorted(Comparator.comparingInt(printable -> printable.getLinePriority(context)))
+                    .map(printable -> printable.getLine(context))
+                    .forEach(component::append);
+            return component.build();
+        };
     }
 
     @Override

@@ -20,7 +20,7 @@ class BukkitCommandAdapter implements TabExecutor {
         try {
             executor.run(new CommandContext(manager, sender, command, label, new ArrayDeque<>(List.of(args))));
         } catch (CommandExecutionException exception) {
-            if (exception.getMessage() != null) sender.sendMessage(exception.getMessage());
+            if (exception.getMsg() != null) sender.sendMessage(exception.getMsg());
         }
         return true;
     }

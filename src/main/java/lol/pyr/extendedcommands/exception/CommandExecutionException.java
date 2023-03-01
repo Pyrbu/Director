@@ -2,6 +2,7 @@ package lol.pyr.extendedcommands.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
 
 /**
  * The exception type thrown when execution of a command needs
@@ -11,5 +12,5 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class CommandExecutionException extends Throwable {
-    private final String message;
+    private final Component msg;
 }

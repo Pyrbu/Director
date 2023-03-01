@@ -10,6 +10,7 @@ import lol.pyr.extendedcommands.parsers.WorldParser;
 import lol.pyr.extendedcommands.parsers.primitive.*;
 import lol.pyr.extendedcommands.parsers.util.UUIDParser;
 import lombok.Getter;
+import net.kyori.adventure.text.Component;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -31,12 +32,12 @@ import java.util.function.Function;
 public class CommandManager {
     @Getter private final JavaPlugin plugin;
     private final Map<Class<?>, ParserType<?>> parserMap = new HashMap<>();
-    private final Map<MessageKey, Function<CommandContext, String>> messageResolvers = new HashMap<>();
-    private final Map<Class<? extends ParserType<?>>, Function<CommandContext, String>> parserMessageResolvers = new HashMap<>();
+    private final Map<MessageKey, Function<CommandContext, Component>> messageResolvers = new HashMap<>();
+    private final Map<Class<? extends ParserType<?>>, Function<CommandContext, Component>> parserMessageResolvers = new HashMap<>();
 
-    private Function<CommandContext, String> defaultResolver = (context) -> {
-        if (context.getCurrentUsage().length() == 0) return "Incorrect usage";
-        else return "Incorrect usage: " + context.getCurrentUsage();
+    private Function<CommandContext, Component> defaultResolver = (context) -> {
+        if (context.getCurrentUsage().length() == 0) return Component.text("Incorrect usage");
+        else return Component.text("Incorrect usage: " + context.getCurrentUsage());
     };
 
     public CommandManager(JavaPlugin plugin) {
@@ -48,11 +49,11 @@ public class CommandManager {
         return (T) parserMap.get(type).parse(args);
     }
 
-    protected String getMessage(MessageKey key, CommandContext context) {
+    protected Component getMessage(MessageKey key, CommandContext context) {
         return messageResolvers.getOrDefault(key, defaultResolver).apply(context);
     }
 
-    protected String getMessage(Class<? extends ParserType<?>> clazz, CommandContext context) {
+    protected Component getMessage(Class<? extends ParserType<?>> clazz, CommandContext context) {
         return parserMessageResolvers.getOrDefault(clazz, defaultResolver).apply(context);
     }
 
@@ -63,7 +64,7 @@ public class CommandManager {
      *
      * @param function The function that resolves the default error message
      */
-    public void setDefaultResolver(Function<CommandContext, String> function) {
+    public void setDefaultResolver(Function<CommandContext, Component> function) {
         defaultResolver = function;
     }
 
@@ -86,7 +87,7 @@ public class CommandManager {
      * @param key The message key that the resolver function is for
      * @param func The function that resolves an error message based on a {@link CommandContext}
      */
-    public void setMessageResolver(MessageKey key, Function<CommandContext, String> func) {
+    public void setMessageResolver(MessageKey key, Function<CommandContext, Component> func) {
         messageResolvers.put(key, func);
     }
 
@@ -97,7 +98,7 @@ public class CommandManager {
      * @param clazz The class of the {@link ParserType} that the resolver is being set for
      * @param func The function that resolves the message from the provided {@link CommandContext}
      */
-    public void setMessageResolver(Class<? extends ParserType<?>> clazz, Function<CommandContext, String> func) {
+    public void setMessageResolver(Class<? extends ParserType<?>> clazz, Function<CommandContext, Component> func) {
         parserMessageResolvers.put(clazz, func);
     }
 

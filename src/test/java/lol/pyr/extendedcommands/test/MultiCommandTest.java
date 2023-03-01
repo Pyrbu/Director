@@ -5,6 +5,7 @@ import lol.pyr.extendedcommands.multicommands.MultiCommand;
 import lol.pyr.extendedcommands.api.ExtendedExecutor;
 import lol.pyr.extendedcommands.exception.CommandExecutionException;
 import lol.pyr.extendedcommands.test.util.ContextUtil;
+import net.kyori.adventure.text.Component;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +14,7 @@ import java.util.List;
 public class MultiCommandTest {
     @Test
     public void testMultiCommandCompletion() throws CommandExecutionException {
-        MultiCommand cmd = new MultiCommand(c -> "")
+        MultiCommand cmd = new MultiCommand(c -> Component.text(""))
                 .addSubcommand("test", new ExtendedExecutor() {
                     @Override
                     public void run(CommandContext context) {}

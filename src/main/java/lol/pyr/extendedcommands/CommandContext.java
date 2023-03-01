@@ -4,6 +4,7 @@ import lol.pyr.extendedcommands.exception.CommandExecutionException;
 import lol.pyr.extendedcommands.exception.ParsingException;
 import lombok.Getter;
 import lombok.Setter;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -206,7 +207,7 @@ public class CommandContext {
      * @param message The message to be sent to the player
      * @throws CommandExecutionException To stop execution
      */
-    public void halt(String message) throws CommandExecutionException {
+    public void halt(Component message) throws CommandExecutionException {
         throw new CommandExecutionException(message);
     }
 
@@ -225,7 +226,7 @@ public class CommandContext {
      * to the sender of the command
      * @param message The message to send
      */
-    public void send(String message) {
+    public void send(Component message) {
         sender.sendMessage(message);
     }
 }

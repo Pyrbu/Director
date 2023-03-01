@@ -2,6 +2,7 @@ package lol.pyr.extendedcommands.api;
 
 import lol.pyr.extendedcommands.CommandContext;
 import lol.pyr.extendedcommands.multicommands.MultiCommand;
+import net.kyori.adventure.text.Component;
 
 /**
  * This class can be implemented to mark a class as printable
@@ -10,10 +11,11 @@ import lol.pyr.extendedcommands.multicommands.MultiCommand;
 public interface HelpPrintable {
     /**
      * A function to get the string to be printed by this class
+     *
      * @param context The current command context
      * @return The string to be printed
      */
-    String getLine(CommandContext context);
+    Component getLine(CommandContext context);
 
     /**
      * The sorting priority of this line, higher priority goes first
