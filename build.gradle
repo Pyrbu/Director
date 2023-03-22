@@ -12,10 +12,10 @@ repositories {
 }
 
 dependencies {
-    implementation "io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT"
+    compileOnly "io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT"
 
-    testImplementation "org.junit.jupiter:junit-jupiter-api:5.9.0"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.9.0"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.9.2"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.9.2"
 }
 
 test {
@@ -23,7 +23,7 @@ test {
 }
 
 group = "lol.pyr"
-version = "1.6.0"
+version = "1.6.1"
 
 compileJava {
     options.release.set(17)
