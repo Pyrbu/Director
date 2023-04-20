@@ -14,15 +14,26 @@ import java.util.Map;
 import java.util.function.Function;
 
 @SuppressWarnings("unused")
-public class MultiCommand implements ExtendedExecutor {
+public class MultiCommand implements ExtendedExecutor, HelpPrintable {
     private final Map<String, ExtendedExecutor> subcommands = new HashMap<>();
     protected final Function<CommandContext, Component> helpMessageResolver;
+    private final int linePriority;
 
     public MultiCommand(Function<CommandContext, Component> helpMessageResolver) {
-        this.helpMessageResolver = helpMessageResolver;
+        this(0, helpMessageResolver);
     }
 
     public MultiCommand() {
+        this(0);
+    }
+
+    public MultiCommand(int linePriority, Function<CommandContext, Component> helpMessageResolver) {
+        this.linePriority = linePriority;
+        this.helpMessageResolver = helpMessageResolver;
+    }
+
+    public MultiCommand(int linePriority) {
+        this.linePriority = linePriority;
         this.helpMessageResolver = context -> {
             TextComponent.Builder component = Component.text();
             subcommands.values().stream()
@@ -54,5 +65,15 @@ public class MultiCommand implements ExtendedExecutor {
     public MultiCommand addSubcommand(String name, ExtendedExecutor executor) {
         subcommands.put(name.toLowerCase(), executor);
         return this;
+    }
+
+    @Override
+    public Component getLine(CommandContext context) {
+        return helpMessageResolver.apply(context);
+    }
+
+    @Override
+    public int getLinePriority(CommandContext context) {
+        return linePriority;
     }
 }
