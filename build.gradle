@@ -1,70 +1,55 @@
-plugins {
-    id "java-library"
-    id "maven-publish"
-    id "io.freefair.lombok" version "6.5.1"
-}
+subprojects {
+    apply plugin: "java-library"
+    apply plugin: "maven-publish"
 
-repositories {
-    mavenCentral()
-    maven {
-        url "https://repo.papermc.io/repository/maven-public/"
+    dependencies {
+        testImplementation "org.junit.jupiter:junit-jupiter-api:5.9.2"
+        testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.9.2"
     }
-}
 
-dependencies {
-    compileOnly "io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT"
+    test {
+        useJUnitPlatform()
+    }
 
-    testImplementation "org.junit.jupiter:junit-jupiter-api:5.9.2"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.9.2"
-}
+    compileJava {
+        options.release.set(8)
+    }
 
-test {
-    useJUnitPlatform()
-}
-
-group = "lol.pyr"
-version = "1.6.2"
-
-compileJava {
-    options.release.set(17)
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier "javadoc"
-    from javadoc.destinationDir
-}
-
-task sourcesJar(type: Jar) {
-    classifier "sources"
-    from sourceSets.main.allSource
-}
-
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-            artifact javadocJar
-            artifact sourcesJar
-
-            pom {
-                name.set("extendedcommands")
-                description.set("Extension of the Bukkit command framework")
-                url.set("https://github.com/Pyr2115/ExtendedBukkitCommands")
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+                pom {
+                    name.set("extendedcommands-" + project.name)
+                    description.set("Extension of the Bukkit command framework")
+                    url.set("https://github.com/Pyrbu/ExtendedBukkitCommands")
+                }
+            }
+        }
+        repositories {
+            maven {
+                if (properties.containsKey("DIST_USERNAME") && properties.containsKey("DIST_PASSWORD")) {
+                    credentials {
+                        username properties.get("DIST_USERNAME")
+                        password properties.get("DIST_PASSWORD")
+                    }
+                }
+                url = uri("https://repo.pyr.lol/releases/")
             }
         }
     }
+
+    group = "lol.pyr"
+    version = "2.0.0"
+
     repositories {
+        mavenCentral()
         maven {
-            credentials {
-                username DIST_USERNAME
-                password DIST_PASSWORD
-            }
-            url = uri("https://repo.pyr.lol/releases/")
+            url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+        }
+        maven {
+            url "https://repo.papermc.io/repository/maven-public/"
         }
     }
 }
+
