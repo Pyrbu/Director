@@ -1,0 +1,18 @@
+plugins {
+    id "java"
+    id "com.github.johnrengelman.shadow" version "8.1.1"
+    id "xyz.jpenilla.run-paper" version "2.1.0"
+}
+
+runServer {
+    minecraftVersion "1.19.4"
+}
+
+compileJava {
+    options.release.set(17)
+}
+
+dependencies {
+    compileOnly "io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT"
+    implementation project(path: ":spigot", configuration: "shadow")
+}

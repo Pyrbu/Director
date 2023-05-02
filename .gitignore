@@ -6,3 +6,6 @@
 /.gradle/
 /build/
 gradle.properties
+
+# Run Paper
+/test-plugin/run/

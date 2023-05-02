@@ -1,0 +1,8 @@
+name: DirectorTestPlugin
+version: 1.0
+api-version: 1.13
+authors: [Pyr#6969]
+main: lol.pyr.director.plugin.DirectorPlugin
+
+commands:
+  test:
