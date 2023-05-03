@@ -1,7 +1,7 @@
 package lol.pyr.director.standalone.command;
 
 import lol.pyr.director.common.command.CommandExecutionException;
-import lol.pyr.director.common.command.CommandManager;
+import lol.pyr.director.common.command.CommonCommandManager;
 import lol.pyr.director.common.message.Message;
 import lol.pyr.director.common.util.ListUtil;
 import lol.pyr.director.standalone.message.DirectorReceiver;
@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SuppressWarnings("unused")
-public class StandaloneCommandManager extends CommandManager<DirectorReceiver, StandaloneCommandHandler, StandaloneCommandContext> {
+public class StandaloneCommandManager extends CommonCommandManager<DirectorReceiver, StandaloneCommandHandler, StandaloneCommandContext> {
     private final Map<String, StandaloneCommandHandler> commandMap = new HashMap<>();
     private Message<StandaloneCommandContext> unknownCommandMessage = receiver -> {};
 

@@ -1,9 +1,9 @@
-package lol.pyr.director.spigot.parse.spigot;
+package lol.pyr.director.adventure.parse.spigot;
 
+import lol.pyr.director.adventure.command.CommandContext;
+import lol.pyr.director.adventure.parse.ParserType;
 import lol.pyr.director.common.command.CommandExecutionException;
 import lol.pyr.director.common.message.Message;
-import lol.pyr.director.spigot.command.CommandContext;
-import lol.pyr.director.spigot.parse.ParserType;
 import org.bukkit.GameMode;
 
 import java.util.Deque;

@@ -6,8 +6,8 @@ import lol.pyr.director.common.message.PrioritizedMessage;
 import java.util.*;
 
 @SuppressWarnings("unused")
-public class MultiCommand<Sender, Context extends CommandContext<?, ?, Sender, ?>> implements CommandHandler<Context>, PrioritizedMessage<Context> {
-    private final Map<String, CommandHandler<Context>> subcommands = new HashMap<>();
+public class MultiCommand<Sender, Context extends CommonCommandContext<?, ?, Sender, ?>> implements CommonCommandHandler<Context>, PrioritizedMessage<Context> {
+    private final Map<String, CommonCommandHandler<Context>> subcommands = new HashMap<>();
     private final List<PrioritizedMessage<Context>> pMessages = new ArrayList<>();
     private final List<Message<Context>> messages = new ArrayList<>();
     private final int linePriority;
@@ -32,7 +32,7 @@ public class MultiCommand<Sender, Context extends CommandContext<?, ?, Sender, ?
         return subcommands.get(arg).suggest(context);
     }
 
-    public MultiCommand<Sender, Context> addSubcommand(String name, CommandHandler<Context> executor) {
+    public MultiCommand<Sender, Context> addSubcommand(String name, CommonCommandHandler<Context> executor) {
         subcommands.put(name.toLowerCase(), executor);
         return this;
     }
@@ -41,7 +41,7 @@ public class MultiCommand<Sender, Context extends CommandContext<?, ?, Sender, ?
     private void resortMessages() {
         pMessages.clear();
         messages.clear();
-        for (CommandHandler<Context> handler : subcommands.values()) {
+        for (CommonCommandHandler<Context> handler : subcommands.values()) {
             if (handler instanceof PrioritizedMessage) pMessages.add((PrioritizedMessage<Context>) handler);
             else if (handler instanceof Message) messages.add((Message<Context>) handler);
         }
