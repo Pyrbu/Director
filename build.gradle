@@ -15,7 +15,7 @@ subprojects {
         options.release.set(8)
     }
 
-    if (!project.name.equalsIgnoreCase("common")) {
+    if (!project.name.equalsIgnoreCase("common") && !project.name.equalsIgnoreCase("test-plugin")) {
         apply plugin: "maven-publish"
 
         publishing {
