@@ -1,10 +1,36 @@
 plugins {
+    id "maven-publish"
     id "com.github.johnrengelman.shadow" version "8.1.1"
 }
 
 dependencies {
     compileOnly "org.spigotmc:spigot-api:1.19.4-R0.1-SNAPSHOT"
     compileOnly "net.kyori:adventure-platform-bukkit:4.3.0"
-
     implementation project(":common")
+}
+
+publishing {
+    publications {
+        shadow(MavenPublication) { publication ->
+            project.shadow.component(publication)
+            artifactId = "director-adventure"
+
+            pom {
+                name.set("director-adventure")
+                description.set("Extension of the Bukkit command framework")
+                url.set("https://github.com/Pyrbu/Director")
+            }
+        }
+    }
+    repositories {
+        maven {
+            if (parent.properties.containsKey("DIST_USERNAME") && parent.properties.containsKey("DIST_PASSWORD")) {
+                credentials {
+                    username parent.properties.get("DIST_USERNAME")
+                    password parent.properties.get("DIST_PASSWORD")
+                }
+            }
+            url = uri("https://repo.pyr.lol/releases/")
+        }
+    }
 }
