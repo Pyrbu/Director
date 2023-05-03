@@ -18,20 +18,23 @@ subprojects {
     publishing {
         publications {
             mavenJava(MavenPublication) {
+                groupId = "lol.pyr"
+                artifactId = "director-" + project.name
+
                 from components.java
                 pom {
-                    name.set("extendedcommands-" + project.name)
+                    name.set("director-" + project.name)
                     description.set("Extension of the Bukkit command framework")
-                    url.set("https://github.com/Pyrbu/ExtendedBukkitCommands")
+                    url.set("https://github.com/Pyrbu/Director")
                 }
             }
         }
         repositories {
             maven {
-                if (properties.containsKey("DIST_USERNAME") && properties.containsKey("DIST_PASSWORD")) {
+                if (parent.properties.containsKey("DIST_USERNAME") && parent.properties.containsKey("DIST_PASSWORD")) {
                     credentials {
-                        username properties.get("DIST_USERNAME")
-                        password properties.get("DIST_PASSWORD")
+                        username parent.properties.get("DIST_USERNAME")
+                        password parent.properties.get("DIST_PASSWORD")
                     }
                 }
                 url = uri("https://repo.pyr.lol/releases/")
