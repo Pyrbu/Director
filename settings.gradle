@@ -1,3 +1,3 @@
-rootProject.name = "extendedcommands"
+rootProject.name = "Director"
 
 include "common", "standalone", "spigot", "spigot-adventure", "test-plugin"
