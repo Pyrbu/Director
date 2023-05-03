@@ -1,14 +1,15 @@
 package lol.pyr.director.plugin;
 
 import lol.pyr.director.common.command.CommandExecutionException;
-import lol.pyr.director.spigot.command.SpigotCommandContext;
-import lol.pyr.director.spigot.command.SpigotCommandHandler;
+import lol.pyr.director.spigot.command.CommandContext;
+import lol.pyr.director.spigot.command.CommandHandler;
 
+import java.util.Collections;
 import java.util.List;
 
-public class SumCommand implements SpigotCommandHandler {
+public class SumCommand implements CommandHandler {
     @Override
-    public void run(SpigotCommandContext context) throws CommandExecutionException {
+    public void run(CommandContext context) throws CommandExecutionException {
         double sum = 0;
         while (context.argSize() > 0) {
             sum += context.parse(Double.class);
@@ -17,7 +18,7 @@ public class SumCommand implements SpigotCommandHandler {
     }
 
     @Override
-    public List<String> suggest(SpigotCommandContext context) throws CommandExecutionException {
-        return SpigotCommandHandler.super.suggest(context);
+    public List<String> suggest(CommandContext context) {
+        return Collections.emptyList();
     }
 }
