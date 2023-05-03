@@ -1,6 +1,6 @@
 subprojects {
     apply plugin: "java-library"
-    apply plugin: "maven-publish"
+
 
     dependencies {
         testImplementation "org.junit.jupiter:junit-jupiter-api:5.9.2"
@@ -15,32 +15,37 @@ subprojects {
         options.release.set(8)
     }
 
-    publishing {
-        publications {
-            mavenJava(MavenPublication) {
-                groupId = "lol.pyr"
-                artifactId = "director-" + project.name
+    if (!project.name.equalsIgnoreCase("common")) {
+        apply plugin: "maven-publish"
 
-                from components.java
-                pom {
-                    name.set("director-" + project.name)
-                    description.set("Extension of the Bukkit command framework")
-                    url.set("https://github.com/Pyrbu/Director")
-                }
-            }
-        }
-        repositories {
-            maven {
-                if (parent.properties.containsKey("DIST_USERNAME") && parent.properties.containsKey("DIST_PASSWORD")) {
-                    credentials {
-                        username parent.properties.get("DIST_USERNAME")
-                        password parent.properties.get("DIST_PASSWORD")
+        publishing {
+            publications {
+                mavenJava(MavenPublication) {
+                    groupId = "lol.pyr"
+                    artifactId = "director-" + project.name
+
+                    from components.java
+                    pom {
+                        name.set("director-" + project.name)
+                        description.set("Extension of the Bukkit command framework")
+                        url.set("https://github.com/Pyrbu/Director")
                     }
                 }
-                url = uri("https://repo.pyr.lol/releases/")
+            }
+            repositories {
+                maven {
+                    if (parent.properties.containsKey("DIST_USERNAME") && parent.properties.containsKey("DIST_PASSWORD")) {
+                        credentials {
+                            username parent.properties.get("DIST_USERNAME")
+                            password parent.properties.get("DIST_PASSWORD")
+                        }
+                    }
+                    url = uri("https://repo.pyr.lol/releases/")
+                }
             }
         }
     }
+
 
     group = "lol.pyr"
     version = "2.0.0"
