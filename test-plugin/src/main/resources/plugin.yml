@@ -6,3 +6,5 @@ main: lol.pyr.director.plugin.DirectorPlugin
 
 commands:
   test:
+  echo:
+  sum:

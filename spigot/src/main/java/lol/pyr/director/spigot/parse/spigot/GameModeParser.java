@@ -2,14 +2,15 @@ package lol.pyr.director.spigot.parse.spigot;
 
 import lol.pyr.director.common.command.CommandExecutionException;
 import lol.pyr.director.common.message.Message;
+import lol.pyr.director.spigot.command.SpigotCommandContext;
 import lol.pyr.director.spigot.parse.SpigotParser;
 import org.bukkit.GameMode;
-import org.bukkit.command.CommandSender;
 
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressWarnings("unused")
 public class GameModeParser extends SpigotParser<GameMode> {
     private final static Map<String, GameMode> aliasMap = new HashMap<>();
     static {
@@ -27,7 +28,7 @@ public class GameModeParser extends SpigotParser<GameMode> {
         aliasMap.put("sp", GameMode.SPECTATOR);
     }
 
-    public GameModeParser(Message<CommandSender> message) {
+    public GameModeParser(Message<SpigotCommandContext> message) {
         super(message);
     }
 

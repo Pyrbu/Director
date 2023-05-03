@@ -7,7 +7,7 @@ import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class BooleanParser<S> implements ParserType<Boolean, S> {
+public abstract class BooleanParser<Context> implements ParserType<Boolean, Context> {
     private final static Map<String, Boolean> aliasMap = new HashMap<>();
     static {
         aliasMap.put("true", true);

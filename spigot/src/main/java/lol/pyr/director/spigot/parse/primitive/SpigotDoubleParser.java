@@ -1,19 +1,19 @@
 package lol.pyr.director.spigot.parse.primitive;
 
-import lol.pyr.director.common.command.CommandContext;
 import lol.pyr.director.common.message.Message;
 import lol.pyr.director.common.parse.primitive.DoubleParser;
-import org.bukkit.command.CommandSender;
+import lol.pyr.director.spigot.command.SpigotCommandContext;
 
-public class SpigotDoubleParser extends DoubleParser<CommandSender> {
-    private final Message<CommandSender> message;
+@SuppressWarnings("unused")
+public class SpigotDoubleParser extends DoubleParser<SpigotCommandContext> {
+    private final Message<SpigotCommandContext> message;
 
-    public SpigotDoubleParser(Message<CommandSender> message) {
+    public SpigotDoubleParser(Message<SpigotCommandContext> message) {
         this.message = message;
     }
 
     @Override
-    public void send(CommandContext<CommandSender> context) {
+    public void send(SpigotCommandContext context) {
         message.send(context);
     }
 }

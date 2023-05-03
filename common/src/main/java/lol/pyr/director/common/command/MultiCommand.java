@@ -6,10 +6,10 @@ import lol.pyr.director.common.message.PrioritizedMessage;
 import java.util.*;
 
 @SuppressWarnings("unused")
-public class MultiCommand<S> implements CommandHandler<S>, PrioritizedMessage<S> {
-    private final Map<String, CommandHandler<S>> subcommands = new HashMap<>();
-    private final List<PrioritizedMessage<S>> pMessages = new ArrayList<>();
-    private final List<Message<S>> messages = new ArrayList<>();
+public class MultiCommand<Sender, Context extends CommandContext<?, ?, Sender, ?>> implements CommandHandler<Context>, PrioritizedMessage<Context> {
+    private final Map<String, CommandHandler<Context>> subcommands = new HashMap<>();
+    private final List<PrioritizedMessage<Context>> pMessages = new ArrayList<>();
+    private final List<Message<Context>> messages = new ArrayList<>();
     private final int linePriority;
 
     public MultiCommand(int linePriority) {
@@ -17,7 +17,7 @@ public class MultiCommand<S> implements CommandHandler<S>, PrioritizedMessage<S>
     }
 
     @Override
-    public void run(CommandContext<S> context) throws CommandExecutionException {
+    public void run(Context context) throws CommandExecutionException {
         if (context.argSize() < 1) context.halt();
         String arg = context.popString().toLowerCase();
         if (!subcommands.containsKey(arg)) context.halt();
@@ -25,14 +25,14 @@ public class MultiCommand<S> implements CommandHandler<S>, PrioritizedMessage<S>
     }
 
     @Override
-    public List<String> suggest(CommandContext<S> context) throws CommandExecutionException {
+    public List<String> suggest(Context context) throws CommandExecutionException {
         if (context.matchSuggestion()) return context.suggestCollection(subcommands.keySet());
         String arg = context.popString().toLowerCase();
         if (!subcommands.containsKey(arg.toLowerCase())) return Collections.emptyList();
         return subcommands.get(arg).suggest(context);
     }
 
-    public MultiCommand<S> addSubcommand(String name, CommandHandler<S> executor) {
+    public MultiCommand<Sender, Context> addSubcommand(String name, CommandHandler<Context> executor) {
         subcommands.put(name.toLowerCase(), executor);
         return this;
     }
@@ -41,17 +41,17 @@ public class MultiCommand<S> implements CommandHandler<S>, PrioritizedMessage<S>
     private void resortMessages() {
         pMessages.clear();
         messages.clear();
-        for (CommandHandler<S> handler : subcommands.values()) {
-            if (handler instanceof PrioritizedMessage) pMessages.add((PrioritizedMessage<S>) handler);
-            else if (handler instanceof Message) messages.add((Message<S>) handler);
+        for (CommandHandler<Context> handler : subcommands.values()) {
+            if (handler instanceof PrioritizedMessage) pMessages.add((PrioritizedMessage<Context>) handler);
+            else if (handler instanceof Message) messages.add((Message<Context>) handler);
         }
         pMessages.sort(Comparator.comparingInt(PrioritizedMessage::getPriority));
     }
 
     @Override
-    public void send(CommandContext<S> context) {
-        for (PrioritizedMessage<S> msg : pMessages) msg.send(context);
-        for (Message<S> msg : messages) msg.send(context);
+    public void send(Context context) {
+        for (PrioritizedMessage<Context> msg : pMessages) msg.send(context);
+        for (Message<Context> msg : messages) msg.send(context);
     }
 
     @Override

@@ -7,23 +7,24 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class CommandContext<S> {
-    private final CommandManager<S> manager;
-    private final S sender;
+@SuppressWarnings("unused")
+public class CommandContext<Manager extends CommandManager<Sender, Handler, Context>, Context, Sender, Handler extends CommandHandler<?>> {
+    private final Manager manager;
+    private final Sender sender;
     private final String label;
     private final Deque<String> args;
 
     private String usage;
-    private Message<S> lastMsg;
+    private Message<Context> lastMsg;
 
-    public CommandContext(CommandManager<S> manager, S sender, String label, Deque<String> args) {
+    public CommandContext(Manager manager, Sender sender, String label, Deque<String> args) {
         this.manager = manager;
         this.sender = sender;
         this.label = label;
         this.args = args;
     }
 
-    public S getSender() {
+    public Sender getSender() {
         return sender;
     }
 
@@ -31,7 +32,7 @@ public class CommandContext<S> {
         return label;
     }
 
-    public CommandManager<S> getManager() {
+    public Manager getManager() {
         return manager;
     }
 
@@ -43,17 +44,17 @@ public class CommandContext<S> {
         this.usage = usage;
     }
 
-    protected void setLastMessage(Message<S> msg) {
+    protected void setLastMessage(Message<Context> msg) {
         this.lastMsg = msg;
     }
 
-    public Message<S> getLastMessage() {
+    public Message<Context> getLastMessage() {
         return lastMsg;
     }
 
     public <T> T parse(Class<T> type) throws CommandExecutionException {
         try {
-            ParserType<T, S> parser = manager.getParser(type);
+            ParserType<T, Context> parser = manager.getParser(type);
             setLastMessage(parser);
             return parser.parse(args);
         } catch (NoSuchElementException exception) {
@@ -109,7 +110,7 @@ public class CommandContext<S> {
         return args.filter(s -> s.toLowerCase().startsWith(input)).collect(Collectors.toList());
     }
 
-    public void halt(Message<S> message) throws CommandExecutionException {
+    public void halt(Message<Context> message) throws CommandExecutionException {
         setLastMessage(message);
         throw new CommandExecutionException();
     }

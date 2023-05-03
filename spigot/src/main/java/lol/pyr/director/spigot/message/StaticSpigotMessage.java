@@ -1,10 +1,9 @@
 package lol.pyr.director.spigot.message;
 
-import lol.pyr.director.common.command.CommandContext;
 import lol.pyr.director.common.message.Message;
-import org.bukkit.command.CommandSender;
+import lol.pyr.director.spigot.command.SpigotCommandContext;
 
-public class StaticSpigotMessage implements Message<CommandSender> {
+public class StaticSpigotMessage implements Message<SpigotCommandContext> {
     private final String message;
 
     public StaticSpigotMessage(String message) {
@@ -12,7 +11,7 @@ public class StaticSpigotMessage implements Message<CommandSender> {
     }
 
     @Override
-    public void send(CommandContext<CommandSender> context) {
+    public void send(SpigotCommandContext context) {
         context.getSender().sendMessage(message);
     }
 }

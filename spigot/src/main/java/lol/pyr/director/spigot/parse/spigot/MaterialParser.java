@@ -2,14 +2,15 @@ package lol.pyr.director.spigot.parse.spigot;
 
 import lol.pyr.director.common.command.CommandExecutionException;
 import lol.pyr.director.common.message.Message;
+import lol.pyr.director.spigot.command.SpigotCommandContext;
 import lol.pyr.director.spigot.parse.SpigotParser;
 import org.bukkit.Material;
-import org.bukkit.command.CommandSender;
 
 import java.util.Deque;
 
+@SuppressWarnings("unused")
 public class MaterialParser extends SpigotParser<Material> {
-    public MaterialParser(Message<CommandSender> message) {
+    public MaterialParser(Message<SpigotCommandContext> message) {
         super(message);
     }
 

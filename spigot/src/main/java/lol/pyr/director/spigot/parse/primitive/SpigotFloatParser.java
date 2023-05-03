@@ -1,19 +1,19 @@
 package lol.pyr.director.spigot.parse.primitive;
 
-import lol.pyr.director.common.command.CommandContext;
 import lol.pyr.director.common.message.Message;
 import lol.pyr.director.common.parse.primitive.FloatParser;
-import org.bukkit.command.CommandSender;
+import lol.pyr.director.spigot.command.SpigotCommandContext;
 
-public class SpigotFloatParser extends FloatParser<CommandSender> {
-    private final Message<CommandSender> message;
+@SuppressWarnings("unused")
+public class SpigotFloatParser extends FloatParser<SpigotCommandContext> {
+    private final Message<SpigotCommandContext> message;
 
-    public SpigotFloatParser(Message<CommandSender> message) {
+    public SpigotFloatParser(Message<SpigotCommandContext> message) {
         this.message = message;
     }
 
     @Override
-    public void send(CommandContext<CommandSender> context) {
+    public void send(SpigotCommandContext context) {
         message.send(context);
     }
 }

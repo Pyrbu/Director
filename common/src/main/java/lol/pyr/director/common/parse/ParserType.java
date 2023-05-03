@@ -5,6 +5,6 @@ import lol.pyr.director.common.message.Message;
 
 import java.util.Deque;
 
-public interface ParserType<T, S> extends Message<S>  {
-    T parse(Deque<String> args) throws CommandExecutionException;
+public interface ParserType<Type, Context> extends Message<Context>  {
+    Type parse(Deque<String> args) throws CommandExecutionException;
 }

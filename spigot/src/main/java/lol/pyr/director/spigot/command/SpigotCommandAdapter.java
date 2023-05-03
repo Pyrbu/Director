@@ -26,9 +26,9 @@ public class SpigotCommandAdapter implements TabExecutor {
         try {
             handler.run(context);
         } catch (CommandExecutionException exception) {
-            Message<CommandSender> msg = context.getLastMessage();
-            if (msg == null) msg = manager.getDefaultMessage();
-            msg.send(context);
+            Message<SpigotCommandContext> msg = context.getLastMessage();
+            if (msg != null) msg.send(context);
+            else manager.getDefaultMessage().send(context);
         }
         return true;
     }
