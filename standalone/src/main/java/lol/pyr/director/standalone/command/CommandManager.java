@@ -12,26 +12,26 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SuppressWarnings("unused")
-public class StandaloneCommandManager extends CommonCommandManager<DirectorReceiver, StandaloneCommandHandler, StandaloneCommandContext> {
-    private final Map<String, StandaloneCommandHandler> commandMap = new HashMap<>();
-    private Message<StandaloneCommandContext> unknownCommandMessage = receiver -> {};
+public class CommandManager extends CommonCommandManager<DirectorReceiver, CommandHandler, CommandContext> {
+    private final Map<String, CommandHandler> commandMap = new HashMap<>();
+    private Message<CommandContext> unknownCommandMessage = receiver -> {};
 
-    public StandaloneCommandManager(Message<StandaloneCommandContext> defaultMessage) {
+    public CommandManager(Message<CommandContext> defaultMessage) {
         super(defaultMessage);
     }
 
-    public void setUnknownCommandMessage(Message<StandaloneCommandContext> unknownCommandMessage) {
+    public void setUnknownCommandMessage(Message<CommandContext> unknownCommandMessage) {
         this.unknownCommandMessage = unknownCommandMessage;
     }
 
-    public void registerCommand(String name, StandaloneCommandHandler command) {
+    public void registerCommand(String name, CommandHandler command) {
         commandMap.put(name.toLowerCase(), command);
     }
 
     public void runCommand(DirectorReceiver sender, String[] args) {
         if (args.length == 0) throw new IllegalStateException("Zero arguments passed to StandaloneCommandManager#runCommand()");
         String label = args[0];
-        StandaloneCommandContext context = new StandaloneCommandContext(this, sender, label, new ArrayDeque<>(ListUtil.immutableList(Arrays.copyOfRange(args, 1, args.length))));
+        CommandContext context = new CommandContext(this, sender, label, new ArrayDeque<>(ListUtil.immutableList(Arrays.copyOfRange(args, 1, args.length))));
         if (!commandMap.containsKey(label.toLowerCase())) {
             unknownCommandMessage.send(context);
             return;
@@ -39,7 +39,7 @@ public class StandaloneCommandManager extends CommonCommandManager<DirectorRecei
         try {
             commandMap.get(label.toLowerCase()).run(context);
         } catch (CommandExecutionException exception) {
-            Message<StandaloneCommandContext> msg = context.getLastMessage();
+            Message<CommandContext> msg = context.getLastMessage();
             if (msg == null) msg = getDefaultMessage();
             msg.send(context);
         }

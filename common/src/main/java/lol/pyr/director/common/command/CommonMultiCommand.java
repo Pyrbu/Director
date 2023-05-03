@@ -6,13 +6,13 @@ import lol.pyr.director.common.message.PrioritizedMessage;
 import java.util.*;
 
 @SuppressWarnings("unused")
-public class MultiCommand<Sender, Context extends CommonCommandContext<?, ?, Sender, ?>> implements CommonCommandHandler<Context>, PrioritizedMessage<Context> {
-    private final Map<String, CommonCommandHandler<Context>> subcommands = new HashMap<>();
+public class CommonMultiCommand<Sender, Context extends CommonCommandContext<?, Context, Sender, Handler>, Handler extends CommonCommandHandler<Context>> implements CommonCommandHandler<Context>, PrioritizedMessage<Context> {
+    private final Map<String, Handler> subcommands = new HashMap<>();
     private final List<PrioritizedMessage<Context>> pMessages = new ArrayList<>();
     private final List<Message<Context>> messages = new ArrayList<>();
     private final int linePriority;
 
-    public MultiCommand(int linePriority) {
+    public CommonMultiCommand(int linePriority) {
         this.linePriority = linePriority;
     }
 
@@ -32,7 +32,7 @@ public class MultiCommand<Sender, Context extends CommonCommandContext<?, ?, Sen
         return subcommands.get(arg).suggest(context);
     }
 
-    public MultiCommand<Sender, Context> addSubcommand(String name, CommonCommandHandler<Context> executor) {
+    public CommonMultiCommand<Sender, Context, Handler> addSubcommand(String name, Handler executor) {
         subcommands.put(name.toLowerCase(), executor);
         return this;
     }

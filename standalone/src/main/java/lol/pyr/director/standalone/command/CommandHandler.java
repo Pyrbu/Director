@@ -7,10 +7,10 @@ import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings({"UnusedReturnValue", "unused", "RedundantThrows"})
-public interface StandaloneCommandHandler extends CommonCommandHandler<StandaloneCommandContext> {
-    void run(StandaloneCommandContext context) throws CommandExecutionException;
+public interface CommandHandler extends CommonCommandHandler<CommandContext> {
+    void run(CommandContext context) throws CommandExecutionException;
 
-    default List<String> suggest(StandaloneCommandContext context) throws CommandExecutionException {
+    default List<String> suggest(CommandContext context) throws CommandExecutionException {
         return Collections.emptyList();
     }
 }

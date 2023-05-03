@@ -7,8 +7,8 @@ import lol.pyr.director.standalone.message.DirectorReceiver;
 import java.util.Deque;
 
 @SuppressWarnings("unused")
-public class StandaloneCommandContext extends CommonCommandContext<StandaloneCommandManager, StandaloneCommandContext, DirectorReceiver, StandaloneCommandHandler> {
-    public StandaloneCommandContext(StandaloneCommandManager manager, DirectorReceiver sender, String label, Deque<String> args) {
+public class CommandContext extends CommonCommandContext<CommandManager, CommandContext, DirectorReceiver, CommandHandler> {
+    public CommandContext(CommandManager manager, DirectorReceiver sender, String label, Deque<String> args) {
         super(manager, sender, label, args);
     }
 
