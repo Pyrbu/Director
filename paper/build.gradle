@@ -1,0 +1,39 @@
+plugins {
+    id "maven-publish"
+    id "com.github.johnrengelman.shadow" version "8.1.1"
+}
+
+dependencies {
+    compileOnly "io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT"
+    implementation project(":common")
+}
+
+compileJava {
+    options.release.set(17)
+}
+
+publishing {
+    publications {
+        shadow(MavenPublication) { publication ->
+            project.shadow.component(publication)
+            artifactId = "director-paper"
+
+            pom {
+                name.set("director-paper")
+                description.set("Extension of the Bukkit command framework")
+                url.set("https://github.com/Pyrbu/Director")
+            }
+        }
+    }
+    repositories {
+        maven {
+            if (parent.properties.containsKey("DIST_USERNAME") && parent.properties.containsKey("DIST_PASSWORD")) {
+                credentials {
+                    username parent.properties.get("DIST_USERNAME")
+                    password parent.properties.get("DIST_PASSWORD")
+                }
+            }
+            url = uri("https://repo.pyr.lol/releases/")
+        }
+    }
+}
