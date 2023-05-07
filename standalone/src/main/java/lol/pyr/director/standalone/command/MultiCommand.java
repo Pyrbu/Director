@@ -4,7 +4,7 @@ import lol.pyr.director.common.command.CommonMultiCommand;
 import lol.pyr.director.standalone.message.DirectorReceiver;
 
 @SuppressWarnings("unused")
-public class MultiCommand extends CommonMultiCommand<DirectorReceiver, CommandContext, CommandHandler> implements CommandHandler {
+public class MultiCommand extends CommonMultiCommand<MultiCommand, DirectorReceiver, CommandContext, CommandHandler> implements CommandHandler {
     public MultiCommand() {
         this(0);
     }
