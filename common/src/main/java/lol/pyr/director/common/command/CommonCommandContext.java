@@ -62,6 +62,17 @@ public class CommonCommandContext<Manager extends CommonCommandManager<Sender, H
         }
     }
 
+    public <T> T suggestionParse(int offset, Class<T> type) throws CommandExecutionException {
+        try {
+            ArrayList<String> list = new ArrayList<>(args);
+            ArrayDeque<String> realArgs = new ArrayDeque<>();
+            for (int i = offset; i < args.size(); i++) realArgs.addFirst(list.get(i));
+            return manager.getParser(type).parse(realArgs);
+        } catch (NoSuchElementException exception) {
+            throw new CommandExecutionException();
+        }
+    }
+
     public void ensureArgsNotEmpty() throws CommandExecutionException {
         setLastMessage(manager.getNotEnoughArgumentsMessage());
         if (argSize() == 0) throw new CommandExecutionException();
