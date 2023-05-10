@@ -26,6 +26,11 @@ public class CommandContext extends CommonCommandContext<CommandManager, Command
         return suggestStream(Bukkit.getOnlinePlayers().stream().map(Player::getName));
     }
 
+    public Player ensureSenderIsPlayer() throws CommandExecutionException {
+        if (getSender() instanceof Player) return (Player) getSender();
+        throw new CommandExecutionException();
+    }
+
     public void halt(String message) throws CommandExecutionException {
         setLastMessage(new StaticMessage(message));
         throw new CommandExecutionException();
@@ -46,5 +51,9 @@ public class CommandContext extends CommonCommandContext<CommandManager, Command
 
     public void send(Component message) {
         getAudience().sendMessage(message);
+    }
+
+    public boolean hasPermission(String string) {
+        return getSender().hasPermission(string);
     }
 }
