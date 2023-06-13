@@ -17,10 +17,9 @@ public class CommonMultiCommand<Self extends CommonMultiCommand<Self, Sender, Co
 
     @Override
     public void run(Context context) throws CommandExecutionException {
-        context.setLastMessage(helpMessage);
-        if (context.argSize() < 1) context.halt();
+        if (context.argSize() < 1) context.halt(helpMessage);
         String arg = context.popString().toLowerCase();
-        if (!subcommands.containsKey(arg)) context.halt();
+        if (!subcommands.containsKey(arg)) context.halt(helpMessage);
         subcommands.get(arg).run(context);
     }
 
