@@ -1,4 +1,4 @@
-package lol.pyr.director.spigot.command;
+package lol.pyr.director.paper.command;
 
 import lol.pyr.director.common.command.CommandExecutionException;
 import lol.pyr.director.common.message.Message;

@@ -1,9 +1,9 @@
-package lol.pyr.director.spigot.parse.paper;
+package lol.pyr.director.paper.parse.paper;
 
 import lol.pyr.director.common.command.CommandExecutionException;
 import lol.pyr.director.common.message.Message;
-import lol.pyr.director.spigot.command.CommandContext;
-import lol.pyr.director.spigot.parse.ParserType;
+import lol.pyr.director.paper.command.CommandContext;
+import lol.pyr.director.paper.parse.ParserType;
 import org.bukkit.Material;
 
 import java.util.Deque;

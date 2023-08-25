@@ -1,7 +1,7 @@
-package lol.pyr.director.spigot.message;
+package lol.pyr.director.paper.message;
 
 import lol.pyr.director.common.message.Message;
-import lol.pyr.director.spigot.command.CommandContext;
+import lol.pyr.director.paper.command.CommandContext;
 
 public class StaticMessage implements Message<CommandContext> {
     private final String message;

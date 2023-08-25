@@ -1,8 +1,8 @@
-package lol.pyr.director.spigot.parse;
+package lol.pyr.director.paper.parse;
 
 import lol.pyr.director.common.message.Message;
 import lol.pyr.director.common.parse.CommonParserType;
-import lol.pyr.director.spigot.command.CommandContext;
+import lol.pyr.director.paper.command.CommandContext;
 
 public abstract class ParserType<T> implements CommonParserType<T, CommandContext> {
     private final Message<CommandContext> message;

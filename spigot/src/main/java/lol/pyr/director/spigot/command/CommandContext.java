@@ -25,6 +25,11 @@ public class CommandContext extends CommonCommandContext<CommandManager, Command
         throw new CommandExecutionException();
     }
 
+    public Player ensureSenderIsPlayer(String message) throws CommandExecutionException {
+        setLastMessage(new StaticMessage(message));
+        return ensureSenderIsPlayer();
+    }
+
     public void halt(String message) throws CommandExecutionException {
         setLastMessage(new StaticMessage(message));
         throw new CommandExecutionException();

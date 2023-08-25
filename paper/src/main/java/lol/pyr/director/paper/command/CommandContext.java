@@ -1,9 +1,9 @@
-package lol.pyr.director.spigot.command;
+package lol.pyr.director.paper.command;
 
 import lol.pyr.director.common.command.CommandExecutionException;
 import lol.pyr.director.common.command.CommonCommandContext;
-import lol.pyr.director.spigot.message.StaticComponentMessage;
-import lol.pyr.director.spigot.message.StaticMessage;
+import lol.pyr.director.paper.message.StaticComponentMessage;
+import lol.pyr.director.paper.message.StaticMessage;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -25,6 +25,16 @@ public class CommandContext extends CommonCommandContext<CommandManager, Command
     public Player ensureSenderIsPlayer() throws CommandExecutionException {
         if (getSender() instanceof Player) return (Player) getSender();
         throw new CommandExecutionException();
+    }
+
+    public Player ensureSenderIsPlayer(String message) throws CommandExecutionException {
+        setLastMessage(new StaticMessage(message));
+        return ensureSenderIsPlayer();
+    }
+
+    public Player ensureSenderIsPlayer(Component message) throws CommandExecutionException {
+        setLastMessage(new StaticComponentMessage(message));
+        return ensureSenderIsPlayer();
     }
 
     public void halt(String message) throws CommandExecutionException {

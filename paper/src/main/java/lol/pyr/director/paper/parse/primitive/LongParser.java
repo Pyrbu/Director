@@ -1,8 +1,8 @@
-package lol.pyr.director.spigot.parse.primitive;
+package lol.pyr.director.paper.parse.primitive;
 
 import lol.pyr.director.common.message.Message;
 import lol.pyr.director.common.parse.primitive.CommonLongParser;
-import lol.pyr.director.spigot.command.CommandContext;
+import lol.pyr.director.paper.command.CommandContext;
 
 @SuppressWarnings("unused")
 public class LongParser extends CommonLongParser<CommandContext> {
