@@ -9,10 +9,18 @@ dependencies {
     implementation project(":common")
 }
 
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
 publishing {
     publications {
         shadow(MavenPublication) { publication ->
             project.shadow.component(publication)
+            publication.artifact javadocJar
+            publication.artifact sourcesJar
+
             artifactId = "director-adventure"
 
             pom {
