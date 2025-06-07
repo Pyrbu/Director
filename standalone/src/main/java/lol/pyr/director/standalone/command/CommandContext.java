@@ -16,4 +16,8 @@ public class CommandContext extends CommonCommandContext<CommandManager, Command
         setLastMessage(r -> r.getSender().send(message));
         throw new CommandExecutionException();
     }
+
+    public void send(String message) {
+        getSender().send(message);
+    }
 }
